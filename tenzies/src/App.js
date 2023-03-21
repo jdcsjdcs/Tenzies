@@ -16,6 +16,7 @@ function App() {
 
     const [dice, setDice] = useState(allNewDice());
     const [gameOver, setGameOver] = useState(false);
+    const [round, setRound] = useState(0)
 
     useEffect(() => {
         const allHeld = dice.every((die) => die.isHeld);
@@ -23,17 +24,30 @@ function App() {
         const allSameValue = dice.every((die) => die.value === firstValue);
         if (allHeld && allSameValue) {
             setGameOver(true);
-            console.log("You won!");
         }
     }, [dice]);
 
+    
+
+  
+
+    
+
+
+
     const roll = () => {
         if (!gameOver) {
+            const prevRound = round
+            setRound(prevRound+1)
             const prevDice = dice;
             setDice(prevDice.map((die) => (die.isHeld ? die : makeNewDie())));
         } else {
             setGameOver(false);
             setDice(allNewDice());
+            setRound(0)
+        
+            
+           
         }
     };
 
@@ -54,8 +68,9 @@ function App() {
                 {gameOver ? "Congratulation!" : "Tenzies"}
             </h1>
             <p className="instructions">
-                Roll until all dice are the same. Click each die to freeze it at
-                its current value between rolls.
+                {gameOver
+                    ? `You won making ${round} round! `
+                    : "Roll until all dice are the same. Click each die to freeze it at its current value between rolls."}
             </p>
             <div className="container">
                 {dice.map((die) => (
@@ -70,6 +85,7 @@ function App() {
             <button className="roll-btn" onClick={roll}>
                 {gameOver ? "New Game" : "Roll"}
             </button>
+            <p className="round">Round: {round}</p> 
         </main>
     );
 }
