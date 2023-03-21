@@ -69,7 +69,7 @@ function App() {
             </h1>
             <p className="instructions">
                 {gameOver
-                    ? `You won making ${round} round! `
+                    ? `You won making ${round} rounds! `
                     : "Roll until all dice are the same. Click each die to freeze it at its current value between rolls."}
             </p>
             <div className="container">
